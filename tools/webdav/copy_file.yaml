@@ -1,0 +1,41 @@
+identity:
+  name: copy_file
+  author: shaba
+  label:
+    en_US: Copy a file
+description:
+  human:
+    en_US: Copy a file or folder on the WebDAV server
+  llm: Copy a file or folder on the WebDAV server to a new path on the same server. Refuses to replace an existing destination unless overwrite is set to true — an existing destination without overwrite=true returns a "destination exists" error.
+parameters:
+  - name: from_path
+    type: string
+    required: true
+    label:
+      en_US: From path
+    human_description:
+      en_US: Source path, relative to the WebDAV base URL
+    llm_description: Path of the file or folder to copy, relative to the configured WebDAV base URL.
+    form: llm
+  - name: to_path
+    type: string
+    required: true
+    label:
+      en_US: To path
+    human_description:
+      en_US: Destination path on the same server
+    llm_description: Path of the copy to create, relative to the configured WebDAV base URL. Must be on the same server.
+    form: llm
+  - name: overwrite
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Overwrite
+    human_description:
+      en_US: Replace the destination when it already exists (default — refuse)
+    llm_description: When true, an existing destination is replaced; when false (default), copying over an existing destination fails with a "destination exists" error.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/copy_file.py

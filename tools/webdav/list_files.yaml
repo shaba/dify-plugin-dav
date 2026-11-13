@@ -1,0 +1,22 @@
+identity:
+  name: list_files
+  author: shaba
+  label:
+    en_US: List files
+description:
+  human:
+    en_US: List files and folders in a WebDAV directory
+  llm: List the files and folders inside a WebDAV directory (Depth-1 listing). Returns each entry's name, path, type (dir/file), size, content type and last-modified time. Omit path to list the configured base directory.
+parameters:
+  - name: path
+    type: string
+    required: false
+    label:
+      en_US: Path
+    human_description:
+      en_US: Directory to list, relative to the WebDAV base URL (default — base directory)
+    llm_description: Directory path relative to the configured WebDAV base URL. Omit to list the base directory itself.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/list_files.py

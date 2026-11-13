@@ -8,18 +8,25 @@ from caldav_client.errors import redact_credentials as caldav_redact
 from carddav_client.api import get_addressbooks, make_session
 from carddav_client.errors import redact_credentials as carddav_redact
 from dav_credentials import group_values, has_group
+from webdav_client.client import WebDAVClient
+from webdav_client.errors import redact_credentials as webdav_redact
 
-_REDACT = {"CalDAV": caldav_redact, "CardDAV": carddav_redact}
+_REDACT = {
+    "CalDAV": caldav_redact,
+    "CardDAV": carddav_redact,
+    "WebDAV": webdav_redact,
+}
 
 
 class DAVProvider(ToolProvider):
     def _validate_credentials(self, credentials: dict[str, Any]) -> None:
-        protocols = [p for p in ("CalDAV", "CardDAV") if has_group(p, credentials)]
+        protocols = [p for p in ("CalDAV", "CardDAV", "WebDAV") if has_group(p, credentials)]
         if not protocols:
             raise ToolProviderCredentialValidationError(
                 "configure at least one complete credential group: "
-                "caldav_url/caldav_username/caldav_password or "
-                "carddav_url/carddav_username/carddav_password")
+                "caldav_url/caldav_username/caldav_password, "
+                "carddav_url/carddav_username/carddav_password or "
+                "webdav_url/webdav_username/webdav_password")
         errors: list[str] = []
         for protocol in protocols:
             try:
@@ -35,10 +42,15 @@ class DAVProvider(ToolProvider):
                         group["base_url"], group["username"], group["password"],
                         timeout=15)
                     list_calendars(client)
-                else:
+                elif protocol == "CardDAV":
                     session = make_session(
                         group["username"], group["password"], timeout=15)
                     get_addressbooks(session, group["base_url"])
+                else:
+                    client = WebDAVClient(
+                        group["base_url"], group["username"], group["password"],
+                        timeout=15)
+                    client.check()
             except Exception as exc:  # noqa: BLE001
                 errors.append(
                     f"{protocol} server is not reachable at {safe_url}: "

@@ -5,9 +5,9 @@ name: dav
 repo: https://github.com/shaba/dify-plugin-dav
 contact: shaba@altlinux.org
 label:
-  en_US: DAV (CalDAV + CardDAV)
+  en_US: DAV (CalDAV + CardDAV + WebDAV)
 description:
-  en_US: "CalDAV calendar events and tasks plus CardDAV contacts on any DAV server (Nextcloud, Radicale, …). WebDAV files are provided by the separate shaba/webdav datasource plugin."
+  en_US: "CalDAV calendar events and tasks, CardDAV contacts and WebDAV file utilities on any DAV server (Nextcloud, Radicale, …). Knowledge-base ingestion of WebDAV files stays with the separate shaba/webdav datasource plugin."
 icon: icon.svg
 resource:
   memory: 268435456

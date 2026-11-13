@@ -1,0 +1,32 @@
+identity:
+  name: create_directory
+  author: shaba
+  label:
+    en_US: Create a directory
+description:
+  human:
+    en_US: Create a folder on the WebDAV server
+  llm: Create a folder (collection) on the WebDAV server. Fails when the folder already exists or when a parent folder is missing, unless recursive=true, which creates the whole parent chain.
+parameters:
+  - name: path
+    type: string
+    required: true
+    label:
+      en_US: Path
+    human_description:
+      en_US: Folder path to create, relative to the WebDAV base URL
+    llm_description: Path of the folder to create, relative to the configured WebDAV base URL.
+    form: llm
+  - name: recursive
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Recursive
+    human_description:
+      en_US: Create missing parent folders too (default — fail if a parent is missing)
+    llm_description: When true, missing parent folders are created as well; when false (default), creation fails if the parent folder does not exist.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/create_directory.py

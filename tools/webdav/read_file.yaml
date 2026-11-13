@@ -1,0 +1,22 @@
+identity:
+  name: read_file
+  author: shaba
+  label:
+    en_US: Read a file
+description:
+  human:
+    en_US: Read a text file from the WebDAV server
+  llm: Read a UTF-8 text file from the WebDAV server and return its content. Only for files up to 1 MiB; larger or binary files must be ingested with the shaba/webdav datasource plugin instead. Not for folders — use stat_file or list_files on those.
+parameters:
+  - name: path
+    type: string
+    required: true
+    label:
+      en_US: Path
+    human_description:
+      en_US: File path, relative to the WebDAV base URL
+    llm_description: Path of the text file to read, relative to the configured WebDAV base URL. Must be a file, not a folder.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/read_file.py

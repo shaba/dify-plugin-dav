@@ -1,0 +1,31 @@
+identity:
+  name: move_file
+  author: shaba
+  label:
+    en_US: Move a file
+description:
+  human:
+    en_US: Move a file or folder on the WebDAV server
+  llm: Move (rename) a file or folder on the WebDAV server to a new path on the same server. The destination must stay on the same WebDAV server; an existing destination is replaced.
+parameters:
+  - name: from_path
+    type: string
+    required: true
+    label:
+      en_US: From path
+    human_description:
+      en_US: Source path, relative to the WebDAV base URL
+    llm_description: Path of the file or folder to move, relative to the configured WebDAV base URL.
+    form: llm
+  - name: to_path
+    type: string
+    required: true
+    label:
+      en_US: To path
+    human_description:
+      en_US: Destination path on the same server
+    llm_description: New path for the resource, relative to the configured WebDAV base URL. Must be on the same server.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/move_file.py

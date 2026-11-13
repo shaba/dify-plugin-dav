@@ -1,0 +1,41 @@
+identity:
+  name: delete_file
+  author: shaba
+  label:
+    en_US: Delete a file
+description:
+  human:
+    en_US: Delete a file or folder from the WebDAV server
+  llm: Delete a file or folder from the WebDAV server. Destructive — requires confirm=true or the call is refused. A folder that still contains files is only deleted with recursive=true; without it the call fails with a "not empty" error. Deleted data cannot be recovered.
+parameters:
+  - name: path
+    type: string
+    required: true
+    label:
+      en_US: Path
+    human_description:
+      en_US: File or folder path to delete, relative to the WebDAV base URL
+    llm_description: Path of the file or folder to delete, relative to the configured WebDAV base URL.
+    form: llm
+  - name: confirm
+    type: boolean
+    required: true
+    label:
+      en_US: Confirm
+    human_description:
+      en_US: Must be true to actually delete
+    llm_description: 'Safety latch — must be set to true, otherwise the tool refuses with "refusing: pass confirm=true" and nothing is deleted.'
+    form: llm
+  - name: recursive
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Recursive
+    human_description:
+      en_US: Also delete a folder's contents (default — refuse non-empty folders)
+    llm_description: When true, a folder is deleted together with everything inside it. When false (default), deleting a non-empty folder fails with a "not empty" error.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/delete_file.py

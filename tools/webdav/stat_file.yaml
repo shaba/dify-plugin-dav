@@ -1,0 +1,22 @@
+identity:
+  name: stat_file
+  author: shaba
+  label:
+    en_US: Stat a file
+description:
+  human:
+    en_US: Get metadata of a single WebDAV file or folder
+  llm: Get the metadata of one WebDAV resource (file or folder) without downloading its content — name, path, type (dir/file), size, content type and last-modified time. Use to check whether a path exists before reading, writing or deleting it.
+parameters:
+  - name: path
+    type: string
+    required: true
+    label:
+      en_US: Path
+    human_description:
+      en_US: File or folder path, relative to the WebDAV base URL
+    llm_description: Path of the file or folder to inspect, relative to the configured WebDAV base URL.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/stat_file.py

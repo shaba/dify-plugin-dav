@@ -19,11 +19,20 @@ EXPECTED_TOOLS = {
     "list_addressbooks": [],
     "list_contacts": ["addressbook"],
     "search_contacts": ["query", "addressbook"],
+    "list_files": ["path"],
+    "stat_file": ["path"],
+    "read_file": ["path"],
+    "write_file": ["path", "content", "content_type", "overwrite"],
+    "delete_file": ["path", "confirm", "recursive"],
+    "create_directory": ["path", "recursive"],
+    "move_file": ["from_path", "to_path"],
+    "copy_file": ["from_path", "to_path", "overwrite"],
 }
 
 CREDENTIAL_FIELDS = [
     "caldav_url", "caldav_username", "caldav_password",
     "carddav_url", "carddav_username", "carddav_password",
+    "webdav_url", "webdav_username", "webdav_password",
 ]
 
 
@@ -57,9 +66,9 @@ def test_provider_identity_and_tools_count():
     prov = provider()
     assert prov["identity"]["name"] == "dav"
     assert prov["identity"]["author"] == "shaba"
-    assert len(prov["tools"]) == 11
+    assert len(prov["tools"]) == 19
     assert all(
-        rel.startswith(("tools/caldav/", "tools/carddav/"))
+        rel.startswith(("tools/caldav/", "tools/carddav/", "tools/webdav/"))
         for rel in prov["tools"])
 
 

@@ -1,9 +1,9 @@
 """Selection and validation of per-protocol credential groups for the DAV provider.
 
-Each protocol (CalDAV, CardDAV) owns its credential group with an independent
-URL, username and password. Tools and the provider must only ever see their
-own protocol's group: there is no fallback to the other group, no shared
-session and no global state.
+Each protocol (CalDAV, CardDAV, WebDAV) owns its credential group with an
+independent URL, username and password. Tools and the provider must only ever
+see their own protocol's group: there is no fallback to the other groups, no
+shared session and no global state.
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ from typing import Any
 GROUP_KEYS: dict[str, tuple[str, str, str]] = {
     "CalDAV": ("caldav_url", "caldav_username", "caldav_password"),
     "CardDAV": ("carddav_url", "carddav_username", "carddav_password"),
+    "WebDAV": ("webdav_url", "webdav_username", "webdav_password"),
 }
 
 
@@ -51,4 +52,9 @@ def caldav_group(credentials: dict[str, Any]) -> tuple[str, str, str]:
 
 def carddav_group(credentials: dict[str, Any]) -> tuple[str, str, str]:
     group = group_values("CardDAV", credentials)
+    return group["base_url"], group["username"], group["password"]
+
+
+def webdav_group(credentials: dict[str, Any]) -> tuple[str, str, str]:
+    group = group_values("WebDAV", credentials)
     return group["base_url"], group["username"], group["password"]

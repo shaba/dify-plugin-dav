@@ -1,0 +1,50 @@
+identity:
+  name: write_file
+  author: shaba
+  label:
+    en_US: Write a file
+description:
+  human:
+    en_US: Write a text file to the WebDAV server
+  llm: Write text content to a file on the WebDAV server (up to 1 MiB). Refuses to overwrite an existing file unless overwrite is set to true — an existing file without overwrite=true returns an "already exists" error. The parent folder must exist (use create_directory first).
+parameters:
+  - name: path
+    type: string
+    required: true
+    label:
+      en_US: Path
+    human_description:
+      en_US: Destination file path, relative to the WebDAV base URL
+    llm_description: Path of the file to write, relative to the configured WebDAV base URL. The parent folder must already exist.
+    form: llm
+  - name: content
+    type: string
+    required: true
+    label:
+      en_US: Content
+    human_description:
+      en_US: Text to write (max 1 MiB)
+    llm_description: The full text content of the file.
+    form: llm
+  - name: content_type
+    type: string
+    required: false
+    label:
+      en_US: Content type
+    human_description:
+      en_US: MIME type of the content (default — text/plain; charset=utf-8)
+    llm_description: MIME type sent as Content-Type, e.g. text/markdown or application/json. Defaults to text/plain; charset=utf-8.
+    form: llm
+  - name: overwrite
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Overwrite
+    human_description:
+      en_US: Replace the file when it already exists (default — refuse)
+    llm_description: When true, an existing file is replaced; when false (default), writing over an existing file fails with an "already exists" error.
+    form: llm
+extra:
+  python:
+    source: tools/webdav/write_file.py

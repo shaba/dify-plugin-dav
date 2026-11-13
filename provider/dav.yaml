@@ -4,7 +4,7 @@ identity:
   label:
     en_US: DAV
   description:
-    en_US: DAV — CalDAV calendar events and tasks plus CardDAV contacts on any DAV server (Nextcloud, Radicale, …)
+    en_US: DAV — CalDAV calendar events and tasks, CardDAV contacts plus WebDAV file utilities on any DAV server (Nextcloud, Radicale, …)
   icon: icon.svg
   tags:
     - productivity
@@ -64,6 +64,35 @@ credentials_for_provider:
       en_US: CardDAV password
     help:
       en_US: CardDAV account password or app password
+  webdav_url:
+    type: text-input
+    required: false
+    label:
+      en_US: WebDAV URL
+    placeholder:
+      en_US: https://example.com/remote.php/dav/files/alice/
+    help:
+      en_US: >-
+        Base WebDAV endpoint of your server, e.g.
+        https://example.com/remote.php/dav/files/alice/ . Leave empty when
+        only CalDAV/CardDAV is used.
+    url: https://example.com/remote.php/dav/files/alice/
+  webdav_username:
+    type: text-input
+    required: false
+    label:
+      en_US: WebDAV username
+    placeholder:
+      en_US: alice
+    help:
+      en_US: WebDAV account user name
+  webdav_password:
+    type: secret-input
+    required: false
+    label:
+      en_US: WebDAV password
+    help:
+      en_US: WebDAV account password or app password
 tools:
   - tools/caldav/list_calendars.yaml
   - tools/caldav/list_events.yaml
@@ -76,6 +105,14 @@ tools:
   - tools/carddav/search_contacts.yaml
   - tools/carddav/get_contact.yaml
   - tools/carddav/create_contact.yaml
+  - tools/webdav/list_files.yaml
+  - tools/webdav/stat_file.yaml
+  - tools/webdav/read_file.yaml
+  - tools/webdav/write_file.yaml
+  - tools/webdav/delete_file.yaml
+  - tools/webdav/create_directory.yaml
+  - tools/webdav/move_file.yaml
+  - tools/webdav/copy_file.yaml
 extra:
   python:
     source: provider/dav.py
